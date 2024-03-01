@@ -1,16 +1,14 @@
 import requests
 import pytest
-from constants import Constants
+from constants import Urls
+from constants import Data
+
 
 @pytest.fixture(scope='function')
 def prepare_user():
-    user = {
-        "email": "julsus@yandex.ru",
-        "password": "sus1992",
-        "name": "Yuliya"
-    }
-    response = requests.post(Constants.url_create_user, data=user)
+    user = Data.data_register
+    response = requests.post(Urls.url_create_user, data=user)
     token = response.json()["accessToken"]
     yield prepare_user
-    requests.delete(Constants.url_user, headers={'Authorization': token})
+    requests.delete(Urls.url_user, headers={'Authorization': token})
 
